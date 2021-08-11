@@ -1,24 +1,32 @@
 package com.example.springtodoapp.service;
 
 import com.example.springtodoapp.model.ShoppingCard;
-import com.example.springtodoapp.repository.ShoppingCardRepo;
+import com.example.springtodoapp.repository.ShoppingCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class ShoppingCardService {
-    private final ShoppingCardRepo shoppingCardRepo;
+
+    private final ShoppingCardRepository shoppingCardRepository;
+
     @Autowired
-    public ShoppingCardService(ShoppingCardRepo shoppingCardRepo) { this.shoppingCardRepo = shoppingCardRepo;}
-
-    public ShoppingCard addShoppingCard(ShoppingCard shoppingCard){
-        shoppingCard.setCardText(UUID.randomUUID().toString());
-        return shoppingCardRepo.save(shoppingCard);
+    public ShoppingCardService(ShoppingCardRepository shoppingCardRepository) {
+        this.shoppingCardRepository = shoppingCardRepository;
     }
-    public void deleteShoppingCard(Long id){
-        shoppingCardRepo.deleteShoppingCard(id);
 
+    public ShoppingCard createShoppingCard(ShoppingCard shoppingCard) {
+        return shoppingCardRepository.save(shoppingCard);
+    }
+
+    public ShoppingCard deleteShoppingCard() {
+        return null;
+    }
+
+    public List<ShoppingCard> getShoppingCard() {
+        return shoppingCardRepository.findAll();
     }
 }
