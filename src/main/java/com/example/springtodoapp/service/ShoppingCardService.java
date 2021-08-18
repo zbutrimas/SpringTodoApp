@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ShoppingCardService {
@@ -17,17 +18,17 @@ public class ShoppingCardService {
         this.shoppingCardRepository = shoppingCardRepository;
     }
 
-    public List<ShoppingCard> getShoppingCard() {
+    public List<ShoppingCard> findAllShoppingCards() {
         return shoppingCardRepository.findAll();
     }
 
     public ShoppingCard createShoppingCard(ShoppingCard shoppingCard) {
+        shoppingCard.setCardText(UUID.randomUUID().toString());
         return shoppingCardRepository.save(shoppingCard);
     }
 
-    public ShoppingCard deleteShoppingCard() {
-        return null;
+    public void deleteShoppingCard(Long id) {
+        shoppingCardRepository.deleteShoppingCardById(id);
     }
-
 
 }

@@ -4,12 +4,15 @@ package com.example.springtodoapp.controller;
 import com.example.springtodoapp.model.ShoppingCard;
 import com.example.springtodoapp.service.ShoppingCardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/home/shoppingCard")
+@RequestMapping("/home/shopping_card")
 public class ShoppingCardController {
 
     private final ShoppingCardService shoppingCardService;
@@ -19,19 +22,23 @@ public class ShoppingCardController {
         this.shoppingCardService = shoppingCardService;
     }
 
-    @GetMapping
-    public List<ShoppingCard> getShoppingCard() {
-        return shoppingCardService.getShoppingCard();
+    @GetMapping("/all")
+    public ResponseEntity<List<ShoppingCard>> getShoppingCard() {
+        List<ShoppingCard> shoppingCards = shoppingCardService.findAllShoppingCards();
+        return new ResponseEntity<>(shoppingCards, HttpStatus.OK);
     }
 
-    @PostMapping
-    public void createShoppingCard(@RequestBody ShoppingCard shoppingCard) {
-        shoppingCardService.createShoppingCard(shoppingCard);
+    @PostMapping("/add")
+    public ResponseEntity<ShoppingCard> createShoppingCard (@RequestBody ShoppingCard shoppingCard) {
+        ShoppingCard newShoppingCard = shoppingCardService.createShoppingCard(shoppingCard);
+        return new ResponseEntity<>(newShoppingCard, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public String deleteShoppingCard() {
-        return null;
+    @Transactional
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteShoppingCard(@PathVariable("id") Long id) {
+        shoppingCardService.deleteShoppingCard(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

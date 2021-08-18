@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShoppingCardRepository extends JpaRepository<ShoppingCard, Long> {
+    void deleteShoppingCardById(Long id);
 
 }
