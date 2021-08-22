@@ -22,7 +22,7 @@ public class ShoppingCardService {
         return shoppingCardRepository.findAll();
     }
 
-    public ShoppingCard createShoppingCard(ShoppingCard shoppingCard) {
+    public ShoppingCard addShoppingCard(ShoppingCard shoppingCard) {
         shoppingCard.setCardText(UUID.randomUUID().toString());
         return shoppingCardRepository.save(shoppingCard);
     }

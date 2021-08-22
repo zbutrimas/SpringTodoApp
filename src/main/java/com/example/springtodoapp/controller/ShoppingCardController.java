@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/home/shopping_card")
+@RequestMapping("/shopping-card")
 public class ShoppingCardController {
 
     private final ShoppingCardService shoppingCardService;
@@ -29,8 +29,8 @@ public class ShoppingCardController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ShoppingCard> createShoppingCard (@RequestBody ShoppingCard shoppingCard) {
-        ShoppingCard newShoppingCard = shoppingCardService.createShoppingCard(shoppingCard);
+    public ResponseEntity<ShoppingCard> addShoppingCard (@RequestBody ShoppingCard shoppingCard) {
+        ShoppingCard newShoppingCard = shoppingCardService.addShoppingCard(shoppingCard);
         return new ResponseEntity<>(newShoppingCard, HttpStatus.CREATED);
     }
 
