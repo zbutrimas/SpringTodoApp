@@ -1,17 +1,23 @@
 package com.example.springtodoapp.model;
 
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Data
 @Entity
-public class ShoppingCard {
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
+public class TodoApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String cardText;
+    private Integer id;
+    private @NonNull String cardText;
 }
