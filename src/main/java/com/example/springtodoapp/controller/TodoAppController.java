@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class TodoAppController {
 
     @Autowired
-    public TodoAppRepository tar;
+    private TodoAppRepository tar;
 
     @GetMapping("/todo")
     public Iterable<TodoApp> getAllTodoApps() {
@@ -24,19 +24,19 @@ public class TodoAppController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/todo/{id}")
-    public TodoApp getAllTodoApps(@PathVariable Integer id) {
-        System.out.println("getAllTodoApps /todo{" + id + "} hit");
+    public TodoApp getAllTodoApp(@PathVariable Integer id) {
+        System.err.println("getAllTodoApp /todo{" + id + "} hit");
         return tar.findById(id).get();
     }
 
     @RequestMapping (
             method = RequestMethod.POST,
             path = "/todos",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+            consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<String> addTodoApp(
-            @RequestParam("cardText") String cardText) {
-        tar.save(new TodoApp(cardText));
+            @RequestBody TodoApp cardText) {
+        tar.save(cardText);
         return new ResponseEntity<>(HttpStatus.CREATED); // 201
     }
 }
