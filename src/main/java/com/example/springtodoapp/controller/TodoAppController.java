@@ -49,10 +49,9 @@ public class TodoAppController {
 //    return new ResponseEntity<>(HttpStatus.CREATED);
 
     // delete todoApp
-//    @RequestMapping(method = RequestMethod.DELETE, path="/todo/{id}")
-//    public Map deleteTodoApp(@PathVariable String id) {
-//        Map postsApp = null;
-//        postsApp.remove(id);
-//        return postsApp;
-//    }
+    @RequestMapping(method = RequestMethod.DELETE, path="/todo/{id}")
+    public Map deleteTodoApp(@PathVariable String id, Map postsApp) {
+        postsApp.remove(id);
+        return postsApp;
+    }
 }
