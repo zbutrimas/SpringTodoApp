@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/main")
@@ -25,18 +28,31 @@ public class TodoAppController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/todo/{id}")
     public TodoApp getAllTodoApp(@PathVariable Integer id) {
-        System.err.println("getAllTodoApp /todo{" + id + "} hit");
-        return tar.findById(id).get();
+        return tar.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping (
+    // add todoApp
+    @RequestMapping(
             method = RequestMethod.POST,
-            path = "/todos",
+            path = "/todo",
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<String> addTodoApp(
-            @RequestBody TodoApp cardText) {
-        tar.save(cardText);
+            @RequestBody TodoApp postApp)
+    {
+        tar.save(postApp);
         return new ResponseEntity<>(HttpStatus.CREATED); // 201
     }
+    //            @RequestBody Map<String> params )
+//        tar.save(new TodoApp(params.get("cardText")));
+//    return new ResponseEntity<>(HttpStatus.CREATED);
+
+    // delete todoApp
+//    @RequestMapping(method = RequestMethod.DELETE, path="/todo/{id}")
+//    public Map deleteTodoApp(@PathVariable String id) {
+//        Map postsApp = null;
+//        postsApp.remove(id);
+//        return postsApp;
+//    }
 }
